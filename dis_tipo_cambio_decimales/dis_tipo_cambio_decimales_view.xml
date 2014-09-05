@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<openerp>
+	<data>
+		
+		<record id="view_res_partner_crm" model="ir.ui.view">
+            <field name="name">res_partner_crm.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='phone']" position="replace">
+                    <field name="phone" required="1" placeholder="+506 000 00 00"/>
+                </xpath>
+                <xpath expr="//field[@name='email']" position="replace">
+                    <field name="email" required="1" widget="email"/>
+                </xpath>
+                <xpath expr="//field[@name='category_id']" position="replace">
+                    <field name="category_id" required="1" widget="many2many_tags" placeholder="Tags..."/>
+                </xpath>
+                <xpath expr="//field[@name='function']" position="replace">
+                    <field name="function" required="0" placeholder="" attrs="{'invisible': [('is_company','=', True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='street']" position="replace">
+                    <field name="street" required="1" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="replace">
+                    <field name="user_id" string="Consultor"/>
+                </xpath>
+                
+                <xpath expr="//notebook/page[@string='Contacts']/field[@name='child_ids']/form/sheet/group/field[@name='phone']" position="replace">
+                    <field name="phone" required="1" placeholder="+506 000 00 00"/>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Contacts']/field[@name='child_ids']/form/sheet/group/field[@name='email']" position="replace">
+                    <field name="email" required="1" widget="email"/>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Contacts']/field[@name='child_ids']/form/sheet/div[@class='oe_title']/field[@name='category_id']" position="replace">
+                    <field name="category_id" required="1" widget="many2many_tags" placeholder="Tags..."/>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Contacts']/field[@name='child_ids']/form/sheet/group/field[@name='function']" position="replace">
+                    <field name="function" required="1"/>
+                </xpath>
+                <xpath expr="//notebook/page[@string='Contacts']/field[@name='child_ids']/form/sheet/group/div[@name='div_address']/field[@name='street']" position="replace">
+                    <field name="street" required="1" attrs="{'readonly': [('use_parent_address','=',True)]}"/>
+                </xpath>
+                
+                
+            </field>
+        </record>
+		
+		<record id="view_crm_lead_crm" model="ir.ui.view">
+            <field name="name">crm_lead_crm.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_leads"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//div[@class='oe_title']" position="replace">
+            		<div>
+            			<h1>
+							<label string="Oportunidad:"/>
+							<field name="id" class="oe_inline"/>
+						</h1>
+						<br/>
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name" placeholder="Describe the lead..."/></h1>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="replace">
+                    <field name="user_id" string="Consultor"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="vertical" widget="many2many_tags" placeholder="Vertical..."/>
+                </xpath>
+            </field>
+        </record>
+        
+        <record id="view_crm_oppor_crm" model="ir.ui.view">
+            <field name="name">crm_loppor_crm.inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_case_form_view_oppor"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//div[@class='oe_title']" position="replace">
+					<div>
+						<h1>
+							<label string="Oportunidad:"/>
+							<field name="id" class="oe_inline"/>
+						</h1>
+						<br/>
+                         <label for="name" class="oe_edit_only"/>
+                         <h1><field name="name"/></h1>
+                         <label for="planned_revenue" class="oe_edit_only"/>
+                         <h2>
+                         	 <field name="company_currency" readonly="0" class="oe_inline"/>
+                             <field name="planned_revenue" class="oe_inline" widget="monetary" options="{'currency_field': 'company_currency'}"/>
+                             <span class="oe_grey"> at </span>
+                             <field name="probability" class="oe_inline" widget="integer"/>%%
+                         </h2>
+                	</div>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="replace">
+                    <field name="user_id" string="Consultor"/>
+                </xpath>
+                <xpath expr="//field[@name='categ_ids']" position="before">
+                    <field name="pre_venta" required="1"/>
+                </xpath>
+                <xpath expr="//field[@name='categ_ids']" position="after">
+                    <field name="fabricante"/>
+                    <field name="deal_id"/>
+                    <field name="bc_id"/>
+                </xpath>
+                <xpath expr="//button[@name='case_mark_won']" position="replace">
+                	<button name="case_mark_won" string="Mark Won" type="object" states="draft,open,pending" class="oe_highlight" context="{'deal_id':deal_id}"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="vertical" widget="many2many_tags" placeholder="Vertical..."/>
+                </xpath>
+            </field>
+        </record>
+	</data>
+</openerp>
